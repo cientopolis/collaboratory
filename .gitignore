@@ -22,7 +22,7 @@
 .vagrant/
 *.swp
 .ruby-*
-bin/**
+# bin/**
 .rspec
 .env
 *~
