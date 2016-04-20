@@ -1,0 +1,299 @@
+                              Prefix Verb     URI Pattern                                                                              Controller#Action
+                         sidekiq_web          /sidekiq                                                                                 Sidekiq::Web
+                                     GET      /oauth/authorize/:code(.:format)                                                         authorizations#show
+                 oauth_authorization GET      /oauth/authorize(.:format)                                                               authorizations#new
+                                     POST     /oauth/authorize(.:format)                                                               authorizations#create
+                                     DELETE   /oauth/authorize(.:format)                                                               authorizations#destroy
+                         oauth_token POST     /oauth/token(.:format)                                                                   tokens#create
+                        oauth_revoke POST     /oauth/revoke(.:format)                                                                  tokens#revoke
+                  oauth_applications GET      /oauth/applications(.:format)                                                            applications#index
+                                     POST     /oauth/applications(.:format)                                                            applications#create
+               new_oauth_application GET      /oauth/applications/new(.:format)                                                        applications#new
+              edit_oauth_application GET      /oauth/applications/:id/edit(.:format)                                                   applications#edit
+                   oauth_application GET      /oauth/applications/:id(.:format)                                                        applications#show
+                                     PATCH    /oauth/applications/:id(.:format)                                                        applications#update
+                                     PUT      /oauth/applications/:id(.:format)                                                        applications#update
+                                     DELETE   /oauth/applications/:id(.:format)                                                        applications#destroy
+       oauth_authorized_applications GET      /oauth/authorized_applications(.:format)                                                 doorkeeper/authorized_applications#index
+        oauth_authorized_application DELETE   /oauth/authorized_applications/:id(.:format)                                             doorkeeper/authorized_applications#destroy
+                    oauth_token_info GET      /oauth/token/info(.:format)                                                              doorkeeper/token_info#show
+             user_omniauth_authorize GET|POST /users/auth/:provider(.:format)                                                          omniauth_callbacks#passthru {:provider=>/facebook|gplus/}
+              user_omniauth_callback GET|POST /users/auth/:action/callback(.:format)                                                   omniauth_callbacks#(?-mix:facebook|gplus)
+                       user_password POST     /users/password(.:format)                                                                passwords#create
+                   new_user_password GET      /users/password/new(.:format)                                                            passwords#new
+                  edit_user_password GET      /users/password/edit(.:format)                                                           passwords#edit
+                                     PATCH    /users/password(.:format)                                                                passwords#update
+                                     PUT      /users/password(.:format)                                                                passwords#update
+                    new_user_session GET      /users/sign_in(.:format)                                                                 sessions#new
+                        user_session POST     /users/sign_in(.:format)                                                                 sessions#create
+                destroy_user_session DELETE   /users/sign_out(.:format)                                                                sessions#destroy
+               new_user_registration GET      /users/sign_up(.:format)                                                                 registrations#new
+                   user_registration POST     /users(.:format)                                                                         registrations#create
+                               users PUT      /users(.:format)                                                                         registrations#update
+                         unsubscribe GET      /unsubscribe(.:format)                                                                   emails#unsubscribe_via_token
+                                     POST     /unsubscribe(.:format)                                                                   emails#unsubscribe_via_email
+                          api_events POST     /api/events(.:format)                                                                    api/events#create {:format=>"json"}
+                              api_me GET      /api/me                                                                                  api/v1/users#me
+                    api_aggregations HEAD     /api/aggregations                                                                        api/v1/aggregations#index
+                                 api HEAD     /api/aggregations/:id                                                                    api/v1/aggregations#show
+                                     GET      /api/aggregations                                                                        api/v1/aggregations#index
+                                     POST     /api/aggregations                                                                        api/v1/aggregations#create
+                     api_aggregation GET      /api/aggregations/:id                                                                    api/v1/aggregations#show {:id=>/[0-9]*/}
+                                     PATCH    /api/aggregations/:id                                                                    api/v1/aggregations#update {:id=>/[0-9]*/}
+                                     PUT      /api/aggregations/:id                                                                    api/v1/aggregations#update {:id=>/[0-9]*/}
+                                     DELETE   /api/aggregations/:id                                                                    api/v1/aggregations#destroy {:id=>/[0-9]*/}
+                api_collection_roles HEAD     /api/collection_roles                                                                    api/v1/collection_roles#index
+                                     HEAD     /api/collection_roles/:id                                                                api/v1/collection_roles#show
+                                     GET      /api/collection_roles                                                                    api/v1/collection_roles#index
+                                     POST     /api/collection_roles                                                                    api/v1/collection_roles#create
+                 api_collection_role GET      /api/collection_roles/:id                                                                api/v1/collection_roles#show {:id=>/[0-9]*/}
+                                     PATCH    /api/collection_roles/:id                                                                api/v1/collection_roles#update {:id=>/[0-9]*/}
+                                     PUT      /api/collection_roles/:id                                                                api/v1/collection_roles#update {:id=>/[0-9]*/}
+                                     DELETE   /api/collection_roles/:id                                                                api/v1/collection_roles#destroy {:id=>/[0-9]*/}
+          api_collection_preferences HEAD     /api/collection_preferences                                                              api/v1/collection_preferences#index
+                                     HEAD     /api/collection_preferences/:id                                                          api/v1/collection_preferences#show
+                                     GET      /api/collection_preferences                                                              api/v1/collection_preferences#index
+                                     POST     /api/collection_preferences                                                              api/v1/collection_preferences#create
+           api_collection_preference GET      /api/collection_preferences/:id                                                          api/v1/collection_preferences#show {:id=>/[0-9]*/}
+                                     PATCH    /api/collection_preferences/:id                                                          api/v1/collection_preferences#update {:id=>/[0-9]*/}
+                                     PUT      /api/collection_preferences/:id                                                          api/v1/collection_preferences#update {:id=>/[0-9]*/}
+                                     DELETE   /api/collection_preferences/:id                                                          api/v1/collection_preferences#destroy {:id=>/[0-9]*/}
+               api_workflow_contents HEAD     /api/workflow_contents                                                                   api/v1/workflow_contents#index
+                                     HEAD     /api/workflow_contents/:id                                                               api/v1/workflow_contents#show
+       api_workflow_content_versions GET      /api/workflow_contents/:workflow_content_id/versions                                     api/v1/workflow_contents#versions {:workflow_content_id=>/[0-9]*/}
+                                     GET      /api/workflow_contents/:workflow_content_id/versions/:id                                 api/v1/workflow_contents#version {:id=>/[0-9]*/, :workflow_content_id=>/[0-9]*/}
+                                     GET      /api/workflow_contents                                                                   api/v1/workflow_contents#index
+                                     POST     /api/workflow_contents                                                                   api/v1/workflow_contents#create
+                api_workflow_content GET      /api/workflow_contents/:id                                                               api/v1/workflow_contents#show {:id=>/[0-9]*/}
+                                     PATCH    /api/workflow_contents/:id                                                               api/v1/workflow_contents#update {:id=>/[0-9]*/}
+                                     PUT      /api/workflow_contents/:id                                                               api/v1/workflow_contents#update {:id=>/[0-9]*/}
+                                     DELETE   /api/workflow_contents/:id                                                               api/v1/workflow_contents#destroy {:id=>/[0-9]*/}
+                api_project_contents HEAD     /api/project_contents                                                                    api/v1/project_contents#index
+                                     HEAD     /api/project_contents/:id                                                                api/v1/project_contents#show
+        api_project_content_versions GET      /api/project_contents/:project_content_id/versions                                       api/v1/project_contents#versions {:project_content_id=>/[0-9]*/}
+                                     GET      /api/project_contents/:project_content_id/versions/:id                                   api/v1/project_contents#version {:id=>/[0-9]*/, :project_content_id=>/[0-9]*/}
+                                     GET      /api/project_contents                                                                    api/v1/project_contents#index
+                                     POST     /api/project_contents                                                                    api/v1/project_contents#create
+                 api_project_content GET      /api/project_contents/:id                                                                api/v1/project_contents#show {:id=>/[0-9]*/}
+                                     PATCH    /api/project_contents/:id                                                                api/v1/project_contents#update {:id=>/[0-9]*/}
+                                     PUT      /api/project_contents/:id                                                                api/v1/project_contents#update {:id=>/[0-9]*/}
+                                     DELETE   /api/project_contents/:id                                                                api/v1/project_contents#destroy {:id=>/[0-9]*/}
+             api_set_member_subjects HEAD     /api/set_member_subjects                                                                 api/v1/set_member_subjects#index
+                                     HEAD     /api/set_member_subjects/:id                                                             api/v1/set_member_subjects#show
+                                     POST     /api/set_member_subjects/:set_member_subject_id/links/:link_relation(.:format)           api/v1/set_member_subjects#update_links {:set_member_subject_id=>/[0-9]*/, :link_relation=>/(retired_workflows)/}
+                                     DELETE   /api/set_member_subjects/:set_member_subject_id/links/:link_relation/:link_ids(.:format) api/v1/set_member_subjects#destroy_links {:set_member_subject_id=>/[0-9]*/, :link_relation=>/(retired_workflows)/}
+                                     GET      /api/set_member_subjects                                                                 api/v1/set_member_subjects#index
+                                     POST     /api/set_member_subjects                                                                 api/v1/set_member_subjects#create
+              api_set_member_subject GET      /api/set_member_subjects/:id                                                             api/v1/set_member_subjects#show {:id=>/[0-9]*/}
+                                     PATCH    /api/set_member_subjects/:id                                                             api/v1/set_member_subjects#update {:id=>/[0-9]*/}
+                                     PUT      /api/set_member_subjects/:id                                                             api/v1/set_member_subjects#update {:id=>/[0-9]*/}
+                                     DELETE   /api/set_member_subjects/:id                                                             api/v1/set_member_subjects#destroy {:id=>/[0-9]*/}
+                   api_project_roles HEAD     /api/project_roles                                                                       api/v1/project_roles#index
+                                     HEAD     /api/project_roles/:id                                                                   api/v1/project_roles#show
+                                     GET      /api/project_roles                                                                       api/v1/project_roles#index
+                                     POST     /api/project_roles                                                                       api/v1/project_roles#create
+                    api_project_role GET      /api/project_roles/:id                                                                   api/v1/project_roles#show {:id=>/[0-9]*/}
+                                     PATCH    /api/project_roles/:id                                                                   api/v1/project_roles#update {:id=>/[0-9]*/}
+                                     PUT      /api/project_roles/:id                                                                   api/v1/project_roles#update {:id=>/[0-9]*/}
+                                     DELETE   /api/project_roles/:id                                                                   api/v1/project_roles#destroy {:id=>/[0-9]*/}
+             api_project_preferences HEAD     /api/project_preferences                                                                 api/v1/project_preferences#index
+                                     HEAD     /api/project_preferences/:id                                                             api/v1/project_preferences#show
+                                     GET      /api/project_preferences                                                                 api/v1/project_preferences#index
+                                     POST     /api/project_preferences                                                                 api/v1/project_preferences#create
+              api_project_preference GET      /api/project_preferences/:id                                                             api/v1/project_preferences#show {:id=>/[0-9]*/}
+                                     PATCH    /api/project_preferences/:id                                                             api/v1/project_preferences#update {:id=>/[0-9]*/}
+                                     PUT      /api/project_preferences/:id                                                             api/v1/project_preferences#update {:id=>/[0-9]*/}
+                                     DELETE   /api/project_preferences/:id                                                             api/v1/project_preferences#destroy {:id=>/[0-9]*/}
+                 api_classifications HEAD     /api/classifications                                                                     api/v1/classifications#index
+                                     HEAD     /api/classifications/:id                                                                 api/v1/classifications#show
+   gold_standard_api_classifications GET      /api/classifications/gold_standard                                                       api/v1/classifications#gold_standard
+      incomplete_api_classifications GET      /api/classifications/incomplete                                                          api/v1/classifications#incomplete
+         project_api_classifications GET      /api/classifications/project                                                             api/v1/classifications#project
+                                     GET      /api/classifications                                                                     api/v1/classifications#index
+                                     POST     /api/classifications                                                                     api/v1/classifications#create
+                  api_classification GET      /api/classifications/:id                                                                 api/v1/classifications#show {:id=>/[0-9]*/}
+                                     PATCH    /api/classifications/:id                                                                 api/v1/classifications#update {:id=>/[0-9]*/}
+                                     PUT      /api/classifications/:id                                                                 api/v1/classifications#update {:id=>/[0-9]*/}
+                                     DELETE   /api/classifications/:id                                                                 api/v1/classifications#destroy {:id=>/[0-9]*/}
+                     api_memberships HEAD     /api/memberships                                                                         api/v1/memberships#index
+                                     HEAD     /api/memberships/:id                                                                     api/v1/memberships#show
+                                     GET      /api/memberships                                                                         api/v1/memberships#index
+                                     POST     /api/memberships                                                                         api/v1/memberships#create
+                      api_membership GET      /api/memberships/:id                                                                     api/v1/memberships#show {:id=>/[0-9]*/}
+                                     PATCH    /api/memberships/:id                                                                     api/v1/memberships#update {:id=>/[0-9]*/}
+                                     PUT      /api/memberships/:id                                                                     api/v1/memberships#update {:id=>/[0-9]*/}
+                                     DELETE   /api/memberships/:id                                                                     api/v1/memberships#destroy {:id=>/[0-9]*/}
+                        api_subjects HEAD     /api/subjects                                                                            api/v1/subjects#index
+                                     HEAD     /api/subjects/:id                                                                        api/v1/subjects#show
+                api_subject_versions GET      /api/subjects/:subject_id/versions                                                       api/v1/subjects#versions {:subject_id=>/[0-9]*/}
+                                     GET      /api/subjects/:subject_id/versions/:id                                                   api/v1/subjects#version {:id=>/[0-9]*/, :subject_id=>/[0-9]*/}
+                                     GET      /api/subjects                                                                            api/v1/subjects#index
+                                     POST     /api/subjects                                                                            api/v1/subjects#create
+                         api_subject GET      /api/subjects/:id                                                                        api/v1/subjects#show {:id=>/[0-9]*/}
+                                     PATCH    /api/subjects/:id                                                                        api/v1/subjects#update {:id=>/[0-9]*/}
+                                     PUT      /api/subjects/:id                                                                        api/v1/subjects#update {:id=>/[0-9]*/}
+                                     DELETE   /api/subjects/:id                                                                        api/v1/subjects#destroy {:id=>/[0-9]*/}
+                           api_users HEAD     /api/users                                                                               api/v1/users#index
+                                     HEAD     /api/users/:id                                                                           api/v1/users#show
+                                     POST     /api/users/:user_id/links/:link_relation(.:format)                                       api/v1/users#update_links {:user_id=>/[0-9]*/, :link_relation=>/(user_groups)/}
+                                     DELETE   /api/users/:user_id/links/:link_relation/:link_ids(.:format)                             api/v1/users#destroy_links {:user_id=>/[0-9]*/, :link_relation=>/(user_groups)/}
+                    api_user_recents GET      /api/users/:user_id/recents                                                              api/v1/users#recents {:user_id=>/[0-9]*/}
+                                     GET      /api/users/:user_id/:media_name                                                          api/v1/media#index {:user_id=>/[0-9]*/, :media_name=>/(avatar)/}
+                                     POST     /api/users/:user_id/:media_name                                                          api/v1/media#create {:user_id=>/[0-9]*/, :media_name=>/(avatar)/}
+                                     PUT      /api/users/:user_id/:media_name                                                          api/v1/media#update {:user_id=>/[0-9]*/, :media_name=>/(avatar)/}
+                                     DELETE   /api/users/:user_id/:media_name                                                          api/v1/media#destroy {:user_id=>/[0-9]*/, :media_name=>/(avatar)/}
+                                     GET      /api/users/:user_id/:media_name                                                          api/v1/media#index {:user_id=>/[0-9]*/, :media_name=>/(profile_header)/}
+                                     POST     /api/users/:user_id/:media_name                                                          api/v1/media#create {:user_id=>/[0-9]*/, :media_name=>/(profile_header)/}
+                                     PUT      /api/users/:user_id/:media_name                                                          api/v1/media#update {:user_id=>/[0-9]*/, :media_name=>/(profile_header)/}
+                                     DELETE   /api/users/:user_id/:media_name                                                          api/v1/media#destroy {:user_id=>/[0-9]*/, :media_name=>/(profile_header)/}
+                                     GET      /api/users                                                                               api/v1/users#index
+                                     POST     /api/users                                                                               api/v1/users#create
+                            api_user GET      /api/users/:id                                                                           api/v1/users#show {:id=>/[0-9]*/}
+                                     PATCH    /api/users/:id                                                                           api/v1/users#update {:id=>/[0-9]*/}
+                                     PUT      /api/users/:id                                                                           api/v1/users#update {:id=>/[0-9]*/}
+                                     DELETE   /api/users/:id                                                                           api/v1/users#destroy {:id=>/[0-9]*/}
+                     api_user_groups HEAD     /api/user_groups                                                                         api/v1/user_groups#index
+                                     HEAD     /api/user_groups/:id                                                                     api/v1/user_groups#show
+                                     POST     /api/user_groups/:user_group_id/links/:link_relation(.:format)                           api/v1/user_groups#update_links {:user_group_id=>/[0-9]*/, :link_relation=>/(users)/}
+                                     DELETE   /api/user_groups/:user_group_id/links/:link_relation/:link_ids(.:format)                 api/v1/user_groups#destroy_links {:user_group_id=>/[0-9]*/, :link_relation=>/(users)/}
+              api_user_group_recents GET      /api/user_groups/:user_group_id/recents                                                  api/v1/user_groups#recents {:user_group_id=>/[0-9]*/}
+                                     GET      /api/user_groups                                                                         api/v1/user_groups#index
+                                     POST     /api/user_groups                                                                         api/v1/user_groups#create
+                      api_user_group GET      /api/user_groups/:id                                                                     api/v1/user_groups#show {:id=>/[0-9]*/}
+                                     PATCH    /api/user_groups/:id                                                                     api/v1/user_groups#update {:id=>/[0-9]*/}
+                                     PUT      /api/user_groups/:id                                                                     api/v1/user_groups#update {:id=>/[0-9]*/}
+                                     DELETE   /api/user_groups/:id                                                                     api/v1/user_groups#destroy {:id=>/[0-9]*/}
+                        api_projects HEAD     /api/projects                                                                            api/v1/projects#index
+                                     HEAD     /api/projects/:id                                                                        api/v1/projects#show
+                                     POST     /api/projects/:project_id/links/:link_relation(.:format)                                 api/v1/projects#update_links {:project_id=>/[0-9]*/, :link_relation=>/(subject_sets|workflows)/}
+                                     DELETE   /api/projects/:project_id/links/:link_relation/:link_ids(.:format)                       api/v1/projects#destroy_links {:project_id=>/[0-9]*/, :link_relation=>/(subject_sets|workflows)/}
+                api_project_versions GET      /api/projects/:project_id/versions                                                       api/v1/projects#versions {:project_id=>/[0-9]*/}
+                                     GET      /api/projects/:project_id/versions/:id                                                   api/v1/projects#version {:id=>/[0-9]*/, :project_id=>/[0-9]*/}
+                                     GET      /api/projects/:project_id/:media_name                                                    api/v1/media#index {:project_id=>/[0-9]*/, :media_name=>/(avatar)/}
+                                     POST     /api/projects/:project_id/:media_name                                                    api/v1/media#create {:project_id=>/[0-9]*/, :media_name=>/(avatar)/}
+                                     PUT      /api/projects/:project_id/:media_name                                                    api/v1/media#update {:project_id=>/[0-9]*/, :media_name=>/(avatar)/}
+                                     DELETE   /api/projects/:project_id/:media_name                                                    api/v1/media#destroy {:project_id=>/[0-9]*/, :media_name=>/(avatar)/}
+                                     GET      /api/projects/:project_id/:media_name                                                    api/v1/media#index {:project_id=>/[0-9]*/, :media_name=>/(background)/}
+                                     POST     /api/projects/:project_id/:media_name                                                    api/v1/media#create {:project_id=>/[0-9]*/, :media_name=>/(background)/}
+                                     PUT      /api/projects/:project_id/:media_name                                                    api/v1/media#update {:project_id=>/[0-9]*/, :media_name=>/(background)/}
+                                     DELETE   /api/projects/:project_id/:media_name                                                    api/v1/media#destroy {:project_id=>/[0-9]*/, :media_name=>/(background)/}
+                                     GET      /api/projects/:project_id/:media_name                                                    api/v1/media#index {:project_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     POST     /api/projects/:project_id/:media_name                                                    api/v1/media#create {:project_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     GET      /api/projects/:project_id/:media_name/:id                                                api/v1/media#show {:id=>/[0-9]*/, :project_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     PUT      /api/projects/:project_id/:media_name/:id                                                api/v1/media#update {:id=>/[0-9]*/, :project_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     DELETE   /api/projects/:project_id/:media_name/:id                                                api/v1/media#destroy {:id=>/[0-9]*/, :project_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     GET      /api/projects/:project_id/:media_name                                                    api/v1/media#index {:project_id=>/[0-9]*/, :media_name=>/(classifications_export)/}
+                                     PUT      /api/projects/:project_id/:media_name                                                    api/v1/media#update {:project_id=>/[0-9]*/, :media_name=>/(classifications_export)/}
+                                     DELETE   /api/projects/:project_id/:media_name                                                    api/v1/media#destroy {:project_id=>/[0-9]*/, :media_name=>/(classifications_export)/}
+                                     GET      /api/projects/:project_id/:media_name                                                    api/v1/media#index {:project_id=>/[0-9]*/, :media_name=>/(subjects_export)/}
+                                     PUT      /api/projects/:project_id/:media_name                                                    api/v1/media#update {:project_id=>/[0-9]*/, :media_name=>/(subjects_export)/}
+                                     DELETE   /api/projects/:project_id/:media_name                                                    api/v1/media#destroy {:project_id=>/[0-9]*/, :media_name=>/(subjects_export)/}
+                                     GET      /api/projects/:project_id/:media_name                                                    api/v1/media#index {:project_id=>/[0-9]*/, :media_name=>/(aggregations_export)/}
+                                     PUT      /api/projects/:project_id/:media_name                                                    api/v1/media#update {:project_id=>/[0-9]*/, :media_name=>/(aggregations_export)/}
+                                     DELETE   /api/projects/:project_id/:media_name                                                    api/v1/media#destroy {:project_id=>/[0-9]*/, :media_name=>/(aggregations_export)/}
+                                     GET      /api/projects/:project_id/:media_name                                                    api/v1/media#index {:project_id=>/[0-9]*/, :media_name=>/(workflows_export)/}
+                                     PUT      /api/projects/:project_id/:media_name                                                    api/v1/media#update {:project_id=>/[0-9]*/, :media_name=>/(workflows_export)/}
+                                     DELETE   /api/projects/:project_id/:media_name                                                    api/v1/media#destroy {:project_id=>/[0-9]*/, :media_name=>/(workflows_export)/}
+                                     GET      /api/projects/:project_id/:media_name                                                    api/v1/media#index {:project_id=>/[0-9]*/, :media_name=>/(workflow_contents_export)/}
+                                     PUT      /api/projects/:project_id/:media_name                                                    api/v1/media#update {:project_id=>/[0-9]*/, :media_name=>/(workflow_contents_export)/}
+                                     DELETE   /api/projects/:project_id/:media_name                                                    api/v1/media#destroy {:project_id=>/[0-9]*/, :media_name=>/(workflow_contents_export)/}
+  api_project_classifications_export POST     /api/projects/:project_id/classifications_export                                         api/v1/projects#create_classifications_export {:project_id=>/[0-9]*/}
+         api_project_subjects_export POST     /api/projects/:project_id/subjects_export                                                api/v1/projects#create_subjects_export {:project_id=>/[0-9]*/}
+     api_project_aggregations_export POST     /api/projects/:project_id/aggregations_export                                            api/v1/projects#create_aggregations_export {:project_id=>/[0-9]*/}
+        api_project_workflows_export POST     /api/projects/:project_id/workflows_export                                               api/v1/projects#create_workflows_export {:project_id=>/[0-9]*/}
+api_project_workflow_contents_export POST     /api/projects/:project_id/workflow_contents_export                                       api/v1/projects#create_workflow_contents_export {:project_id=>/[0-9]*/}
+                   api_project_pages HEAD     /api/projects/:project_id/pages                                                          api/v1/pages#index {:project_id=>/[0-9]*/}
+                                     HEAD     /api/projects/:project_id/pages/:id                                                      api/v1/pages#show {:id=>/[0-9]*/, :project_id=>/[0-9]*/}
+                                     GET      /api/projects/:project_id/pages                                                          api/v1/project_pages#index {:project_id=>/[0-9]*/}
+                                     POST     /api/projects/:project_id/pages                                                          api/v1/project_pages#create {:project_id=>/[0-9]*/}
+                    api_project_page GET      /api/projects/:project_id/pages/:id                                                      api/v1/project_pages#show {:id=>/[0-9]*/, :project_id=>/[0-9]*/}
+                                     PATCH    /api/projects/:project_id/pages/:id                                                      api/v1/project_pages#update {:id=>/[0-9]*/, :project_id=>/[0-9]*/}
+                                     PUT      /api/projects/:project_id/pages/:id                                                      api/v1/project_pages#update {:id=>/[0-9]*/, :project_id=>/[0-9]*/}
+                                     DELETE   /api/projects/:project_id/pages/:id                                                      api/v1/project_pages#destroy {:id=>/[0-9]*/, :project_id=>/[0-9]*/}
+                                     GET      /api/projects                                                                            api/v1/projects#index
+                                     POST     /api/projects                                                                            api/v1/projects#create
+                         api_project GET      /api/projects/:id                                                                        api/v1/projects#show {:id=>/[0-9]*/}
+                                     PATCH    /api/projects/:id                                                                        api/v1/projects#update {:id=>/[0-9]*/}
+                                     PUT      /api/projects/:id                                                                        api/v1/projects#update {:id=>/[0-9]*/}
+                                     DELETE   /api/projects/:id                                                                        api/v1/projects#destroy {:id=>/[0-9]*/}
+                       api_workflows HEAD     /api/workflows                                                                           api/v1/workflows#index
+                                     HEAD     /api/workflows/:id                                                                       api/v1/workflows#show
+                                     POST     /api/workflows/:workflow_id/links/:link_relation(.:format)                               api/v1/workflows#update_links {:workflow_id=>/[0-9]*/, :link_relation=>/(subject_sets|retired_subjects)/}
+                                     DELETE   /api/workflows/:workflow_id/links/:link_relation/:link_ids(.:format)                     api/v1/workflows#destroy_links {:workflow_id=>/[0-9]*/, :link_relation=>/(subject_sets|retired_subjects)/}
+               api_workflow_versions GET      /api/workflows/:workflow_id/versions                                                     api/v1/workflows#versions {:workflow_id=>/[0-9]*/}
+                                     GET      /api/workflows/:workflow_id/versions/:id                                                 api/v1/workflows#version {:id=>/[0-9]*/, :workflow_id=>/[0-9]*/}
+                                     GET      /api/workflows/:workflow_id/:media_name                                                  api/v1/media#index {:workflow_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     POST     /api/workflows/:workflow_id/:media_name                                                  api/v1/media#create {:workflow_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     GET      /api/workflows/:workflow_id/:media_name/:id                                              api/v1/media#show {:id=>/[0-9]*/, :workflow_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     PUT      /api/workflows/:workflow_id/:media_name/:id                                              api/v1/media#update {:id=>/[0-9]*/, :workflow_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     DELETE   /api/workflows/:workflow_id/:media_name/:id                                              api/v1/media#destroy {:id=>/[0-9]*/, :workflow_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+       api_workflow_retired_subjects POST     /api/workflows/:workflow_id/retired_subjects                                             api/v1/workflows#retire_subjects {:workflow_id=>/[0-9]*/}
+                                     GET      /api/workflows                                                                           api/v1/workflows#index
+                                     POST     /api/workflows                                                                           api/v1/workflows#create
+                        api_workflow GET      /api/workflows/:id                                                                       api/v1/workflows#show {:id=>/[0-9]*/}
+                                     PATCH    /api/workflows/:id                                                                       api/v1/workflows#update {:id=>/[0-9]*/}
+                                     PUT      /api/workflows/:id                                                                       api/v1/workflows#update {:id=>/[0-9]*/}
+                                     DELETE   /api/workflows/:id                                                                       api/v1/workflows#destroy {:id=>/[0-9]*/}
+                    api_subject_sets HEAD     /api/subject_sets                                                                        api/v1/subject_sets#index
+                                     HEAD     /api/subject_sets/:id                                                                    api/v1/subject_sets#show
+                                     POST     /api/subject_sets/:subject_set_id/links/:link_relation(.:format)                         api/v1/subject_sets#update_links {:subject_set_id=>/[0-9]*/, :link_relation=>/(subjects)/}
+                                     DELETE   /api/subject_sets/:subject_set_id/links/:link_relation/:link_ids(.:format)               api/v1/subject_sets#destroy_links {:subject_set_id=>/[0-9]*/, :link_relation=>/(subjects)/}
+                                     GET      /api/subject_sets                                                                        api/v1/subject_sets#index
+                                     POST     /api/subject_sets                                                                        api/v1/subject_sets#create
+                     api_subject_set GET      /api/subject_sets/:id                                                                    api/v1/subject_sets#show {:id=>/[0-9]*/}
+                                     PATCH    /api/subject_sets/:id                                                                    api/v1/subject_sets#update {:id=>/[0-9]*/}
+                                     PUT      /api/subject_sets/:id                                                                    api/v1/subject_sets#update {:id=>/[0-9]*/}
+                                     DELETE   /api/subject_sets/:id                                                                    api/v1/subject_sets#destroy {:id=>/[0-9]*/}
+                     api_collections HEAD     /api/collections                                                                         api/v1/collections#index
+                                     HEAD     /api/collections/:id                                                                     api/v1/collections#show
+                                     POST     /api/collections/:collection_id/links/:link_relation(.:format)                           api/v1/collections#update_links {:collection_id=>/[0-9]*/, :link_relation=>/(subjects)/}
+                                     DELETE   /api/collections/:collection_id/links/:link_relation/:link_ids(.:format)                 api/v1/collections#destroy_links {:collection_id=>/[0-9]*/, :link_relation=>/(subjects)/}
+                                     GET      /api/collections                                                                         api/v1/collections#index
+                                     POST     /api/collections                                                                         api/v1/collections#create
+                      api_collection GET      /api/collections/:id                                                                     api/v1/collections#show {:id=>/[0-9]*/}
+                                     PATCH    /api/collections/:id                                                                     api/v1/collections#update {:id=>/[0-9]*/}
+                                     PUT      /api/collections/:id                                                                     api/v1/collections#update {:id=>/[0-9]*/}
+                                     DELETE   /api/collections/:id                                                                     api/v1/collections#destroy {:id=>/[0-9]*/}
+                  api_subject_queues HEAD     /api/subject_queues                                                                      api/v1/subject_queues#index
+                                     HEAD     /api/subject_queues/:id                                                                  api/v1/subject_queues#show
+                                     POST     /api/subject_queues/:subject_queue_id/links/:link_relation(.:format)                     api/v1/subject_queues#update_links {:subject_queue_id=>/[0-9]*/, :link_relation=>/(subjects)/}
+                                     DELETE   /api/subject_queues/:subject_queue_id/links/:link_relation/:link_ids(.:format)           api/v1/subject_queues#destroy_links {:subject_queue_id=>/[0-9]*/, :link_relation=>/(subjects)/}
+                                     GET      /api/subject_queues                                                                      api/v1/subject_queues#index
+                                     POST     /api/subject_queues                                                                      api/v1/subject_queues#create
+                   api_subject_queue GET      /api/subject_queues/:id                                                                  api/v1/subject_queues#show {:id=>/[0-9]*/}
+                                     PATCH    /api/subject_queues/:id                                                                  api/v1/subject_queues#update {:id=>/[0-9]*/}
+                                     PUT      /api/subject_queues/:id                                                                  api/v1/subject_queues#update {:id=>/[0-9]*/}
+                                     DELETE   /api/subject_queues/:id                                                                  api/v1/subject_queues#destroy {:id=>/[0-9]*/}
+                            api_tags HEAD     /api/tags                                                                                api/v1/tags#index
+                                     HEAD     /api/tags/:id                                                                            api/v1/tags#show
+                                     GET      /api/tags                                                                                api/v1/tags#index
+                             api_tag GET      /api/tags/:id                                                                            api/v1/tags#show {:id=>/[0-9]*/}
+                       api_tutorials HEAD     /api/tutorials                                                                           api/v1/tutorials#index
+                                     HEAD     /api/tutorials/:id                                                                       api/v1/tutorials#show
+                                     GET      /api/tutorials/:tutorial_id/:media_name                                                  api/v1/media#index {:tutorial_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     POST     /api/tutorials/:tutorial_id/:media_name                                                  api/v1/media#create {:tutorial_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     GET      /api/tutorials/:tutorial_id/:media_name/:id                                              api/v1/media#show {:id=>/[0-9]*/, :tutorial_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     PUT      /api/tutorials/:tutorial_id/:media_name/:id                                              api/v1/media#update {:id=>/[0-9]*/, :tutorial_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     DELETE   /api/tutorials/:tutorial_id/:media_name/:id                                              api/v1/media#destroy {:id=>/[0-9]*/, :tutorial_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     GET      /api/tutorials                                                                           api/v1/tutorials#index
+                                     POST     /api/tutorials                                                                           api/v1/tutorials#create
+                        api_tutorial GET      /api/tutorials/:id                                                                       api/v1/tutorials#show {:id=>/[0-9]*/}
+                                     PATCH    /api/tutorials/:id                                                                       api/v1/tutorials#update {:id=>/[0-9]*/}
+                                     PUT      /api/tutorials/:id                                                                       api/v1/tutorials#update {:id=>/[0-9]*/}
+                                     DELETE   /api/tutorials/:id                                                                       api/v1/tutorials#destroy {:id=>/[0-9]*/}
+                    api_field_guides HEAD     /api/field_guides                                                                        api/v1/field_guides#index
+                                     HEAD     /api/field_guides/:id                                                                    api/v1/field_guides#show
+                                     GET      /api/field_guides/:field_guide_id/:media_name                                            api/v1/media#index {:field_guide_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     POST     /api/field_guides/:field_guide_id/:media_name                                            api/v1/media#create {:field_guide_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     GET      /api/field_guides/:field_guide_id/:media_name/:id                                        api/v1/media#show {:id=>/[0-9]*/, :field_guide_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     PUT      /api/field_guides/:field_guide_id/:media_name/:id                                        api/v1/media#update {:id=>/[0-9]*/, :field_guide_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     DELETE   /api/field_guides/:field_guide_id/:media_name/:id                                        api/v1/media#destroy {:id=>/[0-9]*/, :field_guide_id=>/[0-9]*/, :media_name=>/(attached_images)/}
+                                     GET      /api/field_guides                                                                        api/v1/field_guides#index
+                                     POST     /api/field_guides                                                                        api/v1/field_guides#create
+                     api_field_guide GET      /api/field_guides/:id                                                                    api/v1/field_guides#show {:id=>/[0-9]*/}
+                                     PATCH    /api/field_guides/:id                                                                    api/v1/field_guides#update {:id=>/[0-9]*/}
+                                     PUT      /api/field_guides/:id                                                                    api/v1/field_guides#update {:id=>/[0-9]*/}
+                                     DELETE   /api/field_guides/:id                                                                    api/v1/field_guides#destroy {:id=>/[0-9]*/}
+                        health_check GET      /health_check(.:format)                                                                  home#index
+                                root GET      /                                                                                        home#index
+                                              /*path(.:format)                                                                         application#unknown_route
