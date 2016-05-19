@@ -1,0 +1,6 @@
+development:
+  adapter: aws
+  bucket: colaboratory
+
+test:
+  adapter: test
