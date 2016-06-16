@@ -40,8 +40,8 @@ panoptes:
     - "CELLECT_ON=true"
     - "CELLECT_MIN_POOL_SIZE=100"
     - "ATTENTION_REDIS_URL=redis://redis:6379/1"
-    - "AWS_ACCESS_KEY_ID=AKIAIPGP6KHQ246U6BTQ"
-    - "AWS_SECRET_ACCESS_KEY=CSgx7dZ0EoA9Bp/uP76r9os36i7WBGIOuDlnULzs"
+    - "AWS_ACCESS_KEY_ID=<YOUR_KEY>"
+    - "AWS_SECRET_ACCESS_KEY=<YOUR_SECRET>"
   links:
     - redis:redis
     - postgres:pg

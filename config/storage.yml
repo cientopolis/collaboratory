@@ -1,6 +1,6 @@
 development:
   adapter: aws
-  bucket: colaboratory
+  bucket: <YOUR_BUCKET>
 
 test:
   adapter: test
