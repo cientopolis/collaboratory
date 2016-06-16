@@ -8,7 +8,7 @@ class Api::V1::SubjectsController < Api::ApiController
 
   alias_method :subject, :controlled_resource
 
-  before_action :check_subject_limit, only: :create
+ # before_action :check_subject_limit, only: :create
 
   def index
     case params[:sort]
