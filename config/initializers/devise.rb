@@ -13,6 +13,7 @@ Devise.setup do |config|
   config.reset_password_within = 6.hours
   config.paranoid = true
   config.sign_out_via = :delete
+  config.secret_key = '1f8a402265703da9ee4d25f04fce0c4ced5c584decaa2460eb799336c30a4427a52c02ea550ba1bd5105440805cb08ba62bad620b18811c3dd049136896ac830'
 
   # MAILER
   require 'devise_mailer/background_mailer'
