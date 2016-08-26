@@ -16,9 +16,9 @@
 /tmp
 
 # Ignore all config files
-docker-compose.yml
 /config/*.yml
 /config/aws_ips.json
+docker-compose.yml
 
 .vagrant/
 *.swp
