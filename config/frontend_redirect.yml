@@ -14,6 +14,6 @@ staging:
   unsubscribe: "/#/unsubscribe"
 
 production:
-  base: "https://panoptes.zooniverse.org"
+  base: "http://localhost:3735"
   password_reset: "/#/reset-password"
   unsubscribe: "/#/unsubscribe"
