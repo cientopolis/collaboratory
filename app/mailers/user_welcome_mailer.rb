@@ -2,8 +2,8 @@ class UserWelcomeMailer < ApplicationMailer
   layout false
 
   SITE_NAME = "Cientópolis"
-  DEFAULT_SUBJECT = "Welcome to #{SITE_NAME}! Your Account & What’s Next"
-  SITE_URL = "http://ec2-52-196-4-55.ap-northeast-1.compute.amazonaws.com"
+  DEFAULT_SUBJECT = "Bienvenido a #{SITE_NAME}! Tu cuenta & lo que sigue"
+  SITE_URL = "http://colaboratorio.cientopolis.org"
 
   def welcome_user(user, project_name=nil)
     @user = user

@@ -159,7 +159,7 @@
                                   </td>
                                   <td width="3"></td>
                                   <td valign="middle">
-                                    <a href="https://www.facebook.com/therealzooniverse">
+                                    <a href="https://www.facebook.com/cientopolis">
                                       <div class="header-content">
                                         <fblike>Facebook</fblike>
                                       </div>
@@ -171,7 +171,7 @@
                                   </td>
                                   <td width="3"></td>
                                   <td valign="middle">
-                                    <a href="http://twitter.com/the_zooniverse">
+                                    <a href="http://twitter.com/cientopolis">
                                       <div class="header-content">
                                         <tweet>Twitter</tweet>
                                       </div>
@@ -207,7 +207,7 @@
                           <td class="w30" width="30"></td>
                           <td class="w580" width="580">
                             <div align="center" id="headline">
-                              <a href="http://zooniverse.org"><img src="http://ec2-52-196-4-55.ap-northeast-1.compute.amazonaws.com/assets/cientopolis-grande.png" alt="Logo Cientópolis" /></a>
+                              <a href="<%= @site_url %>"><img src="http://ec2-52-196-4-55.ap-northeast-1.compute.amazonaws.com/assets/cientopolis-grande.png" alt="Logo Cientópolis" width="513px" height="157px"/></a>
                             </div>
                           </td>
                           <td class="w30" width="30"></td>
@@ -293,7 +293,7 @@
 																						<%- if @user %>
                                               Para darse de baja de estos mensajes instantáneamente
 																							<unsubscribe>
-																								<%= link_to("click aquí", unsubscribe_url(token: @user.unsubscribe_token)) %>
+																								<%= link_to("click aquí", unsubscribe_url(token: @user.unsubscribe_token)) %>.
 																							</unsubscribe>
                                               Por favor, tenga en cuenta que esta acción dará de baja todo tipo de correos desde Cientópolis;
                                               si desea administrar los correos individuales por proyecto, visite el link a la página de opciones
@@ -341,7 +341,7 @@
                           </td>
                           <td class="hide w0" width="60"></td>
                           <td class="hide w0" width="160" valign="top">
-                            <p id="street-address" align="right" class="footer-content-right">Find us online at <a href="http://zooniverse.org">www.zooniverse.org</a></p>
+                            <p id="street-address" align="right" class="footer-content-right">Encontranos en <a href="http://www.cientopolis.org">www.cientopolis.org</a></p>
                           </td>
                           <td class="w30" width="30"></td>
                         </tr>
