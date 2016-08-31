@@ -20,7 +20,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = YAML.load(File.read('config/mailer.yml'))[Rails.env].symbolize_keys
   config.action_mailer.default_url_options = { protocol: 'https',
                                                host: 'staging-cientopolis.org' }
-  config.action_mailer.default_url_options = { host: '127.0.0.1:3000' }
+  config.action_mailer.default_url_options = { host: 'http://colaboratorio.cientopolis.org' }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

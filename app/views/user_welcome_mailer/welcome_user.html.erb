@@ -159,7 +159,7 @@
                                   </td>
                                   <td width="3"></td>
                                   <td valign="middle">
-                                    <a href="https://www.facebook.com/therealzooniverse">
+                                    <a href="https://www.facebook.com/cientopolis">
                                       <div class="header-content">
                                         <fblike>Facebook</fblike>
                                       </div>
@@ -171,7 +171,7 @@
                                   </td>
                                   <td width="3"></td>
                                   <td valign="middle">
-                                    <a href="http://twitter.com/the_zooniverse">
+                                    <a href="http://twitter.com/cientopolis">
                                       <div class="header-content">
                                         <tweet>Twitter</tweet>
                                       </div>
@@ -207,7 +207,7 @@
                           <td class="w30" width="30"></td>
                           <td class="w580" width="580">
                             <div align="center" id="headline">
-                              <a href="http://zooniverse.org"><img src="http://zooniverse-resources.s3.amazonaws.com/newsletter_assets/welcome_email/2013/may/zooniverse-wordmark.png" alt="Zooniverse Logo" /></a>
+                              <a href="<%= @site_url %>"><img src="http://ec2-52-196-4-55.ap-northeast-1.compute.amazonaws.com/assets/cientopolis-grande.png" alt="Logo Cientópolis" width="513px" height="157px"/></a>
                             </div>
                           </td>
                           <td class="w30" width="30"></td>
@@ -235,28 +235,27 @@
                                         <div align="left" class="article-content">
 																					<multiline label="Description">
                                             <p>
-                                              Congratulations, <%= @user.display_name %> - welcome to <%= @welcome_location %>!
+                                              Felicidades, <%= @user.display_name %> - bienvenido a <%= @welcome_location %>!
                                             </p>
                                             <p>
-                                              Your Zooniverse account gives you access to our <a href="https://zooniverse.org/projects">entire suite</a>
-																							of people-powered research projects and <a href="https://zooniverse.org/talk">discussion boards</a>,
-																							plus a personal profile to keep track of all your contributions.
-																							This also lets us credit you for the work you do, and for any unique discoveries you might make.
-																							You’re now all set to start exploring interesting images, videos, and other objects, discussing them with fellow volunteers and researchers,
-																							and contributing to real research.
+                                              Tu cuenta en Cientópolis te da acceso a nuestra <a href="<%= @site_url %>/projects">colección de proyectos</a>
+                                              de investigación conformados por múltiples colaboradores, además de un perfil personal para estar al tanto de
+                                              tus colaboraciones.
+                                              Esto también permite que se te dé crédito por el trabajo que realices en la plataforma, y por cualquier
+                                              descubrimiento único que hagas.
+                                              Ya está todo listo para que empieces a explorar imágenes y videos interesantes, entrar en foros de discusión con
+                                              colegas colaboradores e investigadores, y contribuir con investigaciones reales.
                                             </p>
 																						<p>
-                                              If you’d like to learn a bit more about the site and what you can do, check out our page for <a href="https://zooniverse.org/about">people who are new to Zooniverse</a>.
-																							You can also visit our <a href="https://zooniverse.org/projects">projects page</a> to get involved right away with a project of your choice,
-																							or go to your <a href="https://zooniverse.org/settings">profile settings page</a> to set up your preferences, add a profile picture, or change your password.
+                                              Si te interesa saber más sobre el sitio y lo que puedas hacer, visitá nuestra página para los <a href="<%= @site_url %>/about">recién iniciados en Cientópolis</a>.
+                                              También podés visitar nuestra <a href="<%= @site_url %>/projects">página de proyectos</a> para empezar a colaborar con proyectos de tu elección,
+                                              o visitar la página de tu <a href="<%= @site_url %>/settings">perfil</a> para modificar tus preferencias, agregar una foto de perfil, o cambiar tu contraseña.
 																						</p>
 																						<p>
-                                              We’re really excited to have you with us, and we can’t wait to see what you discover.
-																							Please do join us on the project <a href="https://zooniverse.org/talk">discussion boards</a>,
-																							where you can introduce yourself and chat with us, other volunteers, and the research teams about all the interesting stuff you come across.
+                                              Nos parece excelente que te hayas unido, y esperamos con ansias tus colaboraciones y lo que puedas descubrir.
 																						</p>
 																						<p>
-                                              Thanks,<br><br>The Zooniverse Team
+                                              Muchas gracas,<br><br>El equipo de Cientópolis
 																						</p>
                                           </multiline>
                                         </div>
@@ -286,23 +285,24 @@
                                     <tr>
 																			<td class="w580" width="580">
                                         <div align="left" class="article-content">
-																					<h5>UNSUBSCRIBE INSTRUCTIONS:</h5>
+																					<h5>INSTRUCCIONES PARA DARSE DE BAJA:</h5>
 																					<p>
-																						You are receiving this email because you have recently registered an account with the Zooniverse.
+                                            Recibiste este correo porque recientemente registraste una cuenta en Cientópolis.
 																					</p>
 																					<p>
 																						<%- if @user %>
-																				    	To unsubscribe to these messages instantly
+                                              Para darse de baja de estos mensajes instantáneamente
 																							<unsubscribe>
-																								<%= link_to("click here", unsubscribe_url(token: @user.unsubscribe_token)) %>
+																								<%= link_to("click aquí", unsubscribe_url(token: @user.unsubscribe_token)) %>.
 																							</unsubscribe>
-																				  		Please be aware that this action will unsubscribe you from ALL Zooniverse emails;
-																							if you wish to manage individual project subscriptions, please visit your settings page link below.
-                                              Alternatively you can <a href="https://zooniverse.org/unsubscribe">unsubscribe here</a>.
+                                              Por favor, tenga en cuenta que esta acción dará de baja todo tipo de correos desde Cientópolis;
+                                              si desea administrar los correos individuales por proyecto, visite el link a la página de opciones
+                                              que se encuentra debajo.
+                                              De otro modo, puede darse de baja <a href="<%= @site_url %>/unsubscribe">aquí</a>.
 																						<% end %>
 																					</p>
 																					<p>
-																						To manage your email subscription preferences <a href="https://zooniverse.org/settings">visit here</a>.
+                                            Para administrar sus preferencias de correos, visite <a href="<%= @site_url %>/settings">aquí</a>.
 																					</p>
 																				</div>
 																			</td>
@@ -341,7 +341,7 @@
                           </td>
                           <td class="hide w0" width="60"></td>
                           <td class="hide w0" width="160" valign="top">
-                            <p id="street-address" align="right" class="footer-content-right">Find us online at <a href="http://zooniverse.org">www.zooniverse.org</a></p>
+                            <p id="street-address" align="right" class="footer-content-right">Encontranos en <a href="http://www.cientopolis.org">www.cientopolis.org</a></p>
                           </td>
                           <td class="w30" width="30"></td>
                         </tr>
