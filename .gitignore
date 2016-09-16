@@ -19,7 +19,7 @@
 /config/*.yml
 !/config/database.yml
 /config/aws_ips.json
-docker-compose.yml
+#docker-compose.yml
 
 .vagrant/
 *.swp
