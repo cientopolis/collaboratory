@@ -1,6 +1,6 @@
 development:
   sidekiq:
-    host: 127.0.0.1
+    host: redis
 
 test:
   sidekiq:
