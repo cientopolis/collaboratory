@@ -1,0 +1,11 @@
+development:
+  sidekiq:
+    host: 127.0.0.1
+
+test:
+  sidekiq:
+    host: redis
+
+production:
+  sidekiq:
+    host: redis

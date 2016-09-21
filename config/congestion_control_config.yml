@@ -1,0 +1,31 @@
+dump_default: &dump_default
+  congestion_opts:
+    interval: 5 #86400 = 24h
+    max_in_interval: 1
+    min_delay: 2 #43200 = 12h
+    reject_with: !ruby/symbol cancel
+  
+counter_default: &counter_default
+  congestion_opts:
+    interval: 360
+    max_in_interval: 10
+    min_delay: 180
+    reject_with: !ruby/symbol cancel
+
+test:
+  dump_worker: 
+    <<: *dump_default
+  counter_worker:
+    <<: *counter_default
+
+development:
+  dump_worker: 
+    <<: *dump_default
+  counter_worker:
+    <<: *counter_default
+
+production:
+  dump_worker:
+    <<: *dump_default
+  counter_worker:
+    <<: *counter_default

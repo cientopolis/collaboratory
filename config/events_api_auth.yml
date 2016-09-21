@@ -1,0 +1,11 @@
+development:
+  username: dev
+  password: dev_password
+
+test:
+  username: test
+  password: test_password
+
+production:
+  username: pr0d
+  password: prodp4ss

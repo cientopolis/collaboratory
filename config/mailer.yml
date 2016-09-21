@@ -1,0 +1,26 @@
+test:
+  enable_starttls_auto: true
+  address:
+  port:
+  domain:
+  authentication:
+  user_name:
+  password:
+
+development:
+  enable_starttls_auto: true
+  address: 'smtp.gmail.com'
+  port: 587
+  domain: 'staging-cientopolis.com'
+  authentication: :plain
+  user_name: 'staging.cientopolis@gmail.com'
+  password: 'lifia2k16'
+
+production:
+  enable_starttls_auto: true
+  address: 'smtp.gmail.com'
+  port: 587
+  domain: 'staging-cientopolis.com'
+  authentication: :plain
+  user_name: 'staging.cientopolis@gmail.com'
+  password: 'lifia2k16'
