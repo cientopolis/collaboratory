@@ -23,6 +23,8 @@ puts yellow(panoptes)
 puts "\nYou need to setup an Oauth client application to interact with the API."
 puts "In turn this requires a local admin user account."
 puts "This script will setup both for you.\n\n"
+puts yellow("Enter a username for the admin")
+input_login = STDIN.noecho(&:gets).chomp
 puts yellow("Please enter an password (min 8 chars) for the admin user, make it secure and you'll need to remember this!")
 password = STDIN.noecho(&:gets).chomp
 if password.length < 8
@@ -37,8 +39,8 @@ end
 #setup an admin user
 attrs = { admin: true,
           password: password,
-          login: 'zooniverse_admin',
-          email: 'no-reply@zooniverse.org' }
+          login: input_login,
+          email: 'no-reply@colaboratorio.org' }
 admin = User.create(attrs) do |user|
   user.build_identity_group
 end

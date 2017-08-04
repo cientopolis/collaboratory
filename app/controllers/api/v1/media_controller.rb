@@ -12,6 +12,7 @@ class Api::V1::MediaController < Api::ApiController
   end
 
   def index
+    byebug
     unless media.blank?
       @controlled_resources = media
       if association_numeration == :single
