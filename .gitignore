@@ -36,3 +36,7 @@ spec/examples.txt
 public/commit_id.txt
 vendor/cache/
 vendor/bundle/
+
+.byebug_history
+.project
+script/rails
