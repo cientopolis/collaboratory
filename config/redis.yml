@@ -1,0 +1,11 @@
+development:
+  sidekiq:
+    host: redis
+
+test:
+  sidekiq:
+    host: redis
+
+production:
+  sidekiq:
+    host: redis

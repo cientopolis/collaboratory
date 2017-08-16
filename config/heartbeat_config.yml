@@ -1,0 +1,12 @@
+default: &default
+  window_period: 600
+  emails: staging.cientopolis@gmail.com
+
+test:
+  <<: *default
+
+development:
+  <<: *default
+
+production:
+  <<: *default

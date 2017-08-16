@@ -1,0 +1,8 @@
+development:
+  subjects: 100
+
+test:
+  subjects: 100
+
+production:
+  subjects: 1000
