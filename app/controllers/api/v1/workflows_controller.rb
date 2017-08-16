@@ -10,7 +10,6 @@ class Api::V1::WorkflowsController < Api::ApiController
   schema_type :json_schema
 
   def index
-    byebug
     unless params.has_key?(:sort)
       @controlled_resources = controlled_resources.rank(:display_order)
     end
