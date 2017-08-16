@@ -37,8 +37,12 @@ public/commit_id.txt
 vendor/cache/
 vendor/bundle/
 
+
 #Other
 .idea/
 .byebug_history
 dockerps.txt
 public/assets/
+.project
+script/rails
+
