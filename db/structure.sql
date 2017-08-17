@@ -212,6 +212,37 @@ ALTER SEQUENCE classifications_id_seq OWNED BY classifications.id;
 
 
 --
+-- Name: code_experiment_configs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE code_experiment_configs (
+    id integer NOT NULL,
+    name character varying NOT NULL,
+    enabled_rate double precision DEFAULT 0.0 NOT NULL,
+    always_enabled_for_admins boolean DEFAULT true NOT NULL
+);
+
+
+--
+-- Name: code_experiment_configs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE code_experiment_configs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: code_experiment_configs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE code_experiment_configs_id_seq OWNED BY code_experiment_configs.id;
+
+
+--
 -- Name: collections; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -310,6 +341,99 @@ CREATE SEQUENCE field_guides_id_seq
 --
 
 ALTER SEQUENCE field_guides_id_seq OWNED BY field_guides.id;
+
+
+--
+-- Name: flipper_features; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE flipper_features (
+    id integer NOT NULL,
+    key character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: flipper_features_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE flipper_features_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: flipper_features_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE flipper_features_id_seq OWNED BY flipper_features.id;
+
+
+--
+-- Name: flipper_gates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE flipper_gates (
+    id integer NOT NULL,
+    feature_key character varying NOT NULL,
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: flipper_gates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE flipper_gates_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: flipper_gates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE flipper_gates_id_seq OWNED BY flipper_gates.id;
+
+
+--
+-- Name: gamified_workflows; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE gamified_workflows (
+    id integer NOT NULL,
+    "pointValue" integer
+);
+
+
+--
+-- Name: gamified_workflows_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE gamified_workflows_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gamified_workflows_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE gamified_workflows_id_seq OWNED BY gamified_workflows.id;
 
 
 --
@@ -605,7 +729,8 @@ CREATE TABLE projects (
     launch_date timestamp without time zone,
     completeness double precision DEFAULT 0.0 NOT NULL,
     activity integer DEFAULT 0 NOT NULL,
-    tsv tsvector
+    tsv tsvector,
+    state integer
 );
 
 
@@ -816,7 +941,8 @@ CREATE TABLE subject_workflow_counts (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     retired_at timestamp without time zone,
-    subject_id integer NOT NULL
+    subject_id integer NOT NULL,
+    retirement_reason integer
 );
 
 
@@ -1152,7 +1278,7 @@ CREATE TABLE users (
     subject_limit integer,
     private_profile boolean DEFAULT true,
     tsv tsvector,
-    upload_whitelist boolean DEFAULT false
+    upload_whitelist boolean DEFAULT false NOT NULL
 );
 
 
@@ -1303,7 +1429,8 @@ CREATE TABLE workflows (
     finished_at timestamp without time zone,
     completeness double precision DEFAULT 0.0 NOT NULL,
     activity integer DEFAULT 0 NOT NULL,
-    current_version_number character varying
+    current_version_number character varying,
+    activated_state integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1358,6 +1485,13 @@ ALTER TABLE ONLY classifications ALTER COLUMN id SET DEFAULT nextval('classifica
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY code_experiment_configs ALTER COLUMN id SET DEFAULT nextval('code_experiment_configs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY collections ALTER COLUMN id SET DEFAULT nextval('collections_id_seq'::regclass);
 
 
@@ -1373,6 +1507,27 @@ ALTER TABLE ONLY collections_subjects ALTER COLUMN id SET DEFAULT nextval('colle
 --
 
 ALTER TABLE ONLY field_guides ALTER COLUMN id SET DEFAULT nextval('field_guides_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY flipper_features ALTER COLUMN id SET DEFAULT nextval('flipper_features_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY flipper_gates ALTER COLUMN id SET DEFAULT nextval('flipper_gates_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY gamified_workflows ALTER COLUMN id SET DEFAULT nextval('gamified_workflows_id_seq'::regclass);
 
 
 --
@@ -1597,6 +1752,14 @@ ALTER TABLE ONLY classifications
 
 
 --
+-- Name: code_experiment_configs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY code_experiment_configs
+    ADD CONSTRAINT code_experiment_configs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: collections_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1618,6 +1781,30 @@ ALTER TABLE ONLY collections_subjects
 
 ALTER TABLE ONLY field_guides
     ADD CONSTRAINT field_guides_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: flipper_features_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY flipper_features
+    ADD CONSTRAINT flipper_features_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: flipper_gates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY flipper_gates
+    ADD CONSTRAINT flipper_gates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gamified_workflows_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY gamified_workflows
+    ADD CONSTRAINT gamified_workflows_pkey PRIMARY KEY (id);
 
 
 --
@@ -1949,6 +2136,13 @@ CREATE INDEX index_classifications_on_workflow_id ON classifications USING btree
 
 
 --
+-- Name: index_code_experiment_configs_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_code_experiment_configs_on_name ON code_experiment_configs USING btree (name);
+
+
+--
 -- Name: index_collections_display_name_trgrm; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1998,6 +2192,20 @@ CREATE INDEX index_field_guides_on_project_id ON field_guides USING btree (proje
 
 
 --
+-- Name: index_flipper_features_on_key; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_flipper_features_on_key ON flipper_features USING btree (key);
+
+
+--
+-- Name: index_flipper_gates_on_feature_key_and_key_and_value; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_flipper_gates_on_feature_key_and_key_and_value ON flipper_gates USING btree (feature_key, key, value);
+
+
+--
 -- Name: index_media_on_linked_type_and_linked_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -2016,6 +2224,13 @@ CREATE INDEX index_media_on_type ON media USING btree (type);
 --
 
 CREATE INDEX index_memberships_on_user_group_id ON memberships USING btree (user_group_id);
+
+
+--
+-- Name: index_memberships_on_user_group_id_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_memberships_on_user_group_id_and_user_id ON memberships USING btree (user_group_id, user_id);
 
 
 --
@@ -2156,6 +2371,13 @@ CREATE INDEX index_projects_on_migrated ON projects USING btree (migrated) WHERE
 --
 
 CREATE INDEX index_projects_on_slug ON projects USING btree (slug);
+
+
+--
+-- Name: index_projects_on_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_projects_on_state ON projects USING btree (state) WHERE (state IS NOT NULL);
 
 
 --
@@ -2369,6 +2591,13 @@ CREATE UNIQUE INDEX index_user_groups_on_name ON user_groups USING btree (lower(
 
 
 --
+-- Name: index_user_groups_on_private; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_user_groups_on_private ON user_groups USING btree (private);
+
+
+--
 -- Name: index_user_project_preferences_on_user_id_and_project_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -2422,6 +2651,13 @@ CREATE UNIQUE INDEX index_users_on_login ON users USING btree (lower((login)::te
 --
 
 CREATE UNIQUE INDEX index_users_on_login_with_case ON users USING btree (login);
+
+
+--
+-- Name: index_users_on_lower_names; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_lower_names ON users USING btree (lower((login)::text) text_pattern_ops, lower((display_name)::text) text_pattern_ops);
 
 
 --
@@ -2558,6 +2794,14 @@ CREATE TRIGGER tsvectorupdate BEFORE INSERT OR UPDATE ON users FOR EACH ROW EXEC
 
 
 --
+-- Name: fk_rails_02f2e5d7ed; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY user_collection_preferences
+    ADD CONSTRAINT fk_rails_02f2e5d7ed FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: fk_rails_038f6f9f13; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2566,11 +2810,27 @@ ALTER TABLE ONLY subject_sets_workflows
 
 
 --
+-- Name: fk_rails_0be1922a0e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY access_control_lists
+    ADD CONSTRAINT fk_rails_0be1922a0e FOREIGN KEY (user_group_id) REFERENCES user_groups(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: fk_rails_0ca158de43; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY workflow_tutorials
     ADD CONSTRAINT fk_rails_0ca158de43 FOREIGN KEY (tutorial_id) REFERENCES tutorials(id) ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_107209726e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY workflow_contents
+    ADD CONSTRAINT fk_rails_107209726e FOREIGN KEY (workflow_id) REFERENCES workflows(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -2590,11 +2850,91 @@ ALTER TABLE ONLY subject_workflow_counts
 
 
 --
+-- Name: fk_rails_27ae8e8a0d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY aggregations
+    ADD CONSTRAINT fk_rails_27ae8e8a0d FOREIGN KEY (workflow_id) REFERENCES workflows(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_28a7ada458; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY aggregations
+    ADD CONSTRAINT fk_rails_28a7ada458 FOREIGN KEY (subject_id) REFERENCES subjects(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_305e6d8bf1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY project_contents
+    ADD CONSTRAINT fk_rails_305e6d8bf1 FOREIGN KEY (project_id) REFERENCES projects(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_330c32d8d9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY oauth_access_grants
+    ADD CONSTRAINT fk_rails_330c32d8d9 FOREIGN KEY (resource_owner_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_382d2c48c7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY workflows
+    ADD CONSTRAINT fk_rails_382d2c48c7 FOREIGN KEY (project_id) REFERENCES projects(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: fk_rails_446d9f4164; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY subject_queues
+    ADD CONSTRAINT fk_rails_446d9f4164 FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_489b3ea925; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY project_pages
+    ADD CONSTRAINT fk_rails_489b3ea925 FOREIGN KEY (project_id) REFERENCES projects(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: fk_rails_4a73c0f7f5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subject_workflow_counts
     ADD CONSTRAINT fk_rails_4a73c0f7f5 FOREIGN KEY (workflow_id) REFERENCES workflows(id);
+
+
+--
+-- Name: fk_rails_4da2a0f9d6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY user_project_preferences
+    ADD CONSTRAINT fk_rails_4da2a0f9d6 FOREIGN KEY (project_id) REFERENCES projects(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_4e8620169e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY user_project_preferences
+    ADD CONSTRAINT fk_rails_4e8620169e FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_4ecef5b8c5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY authorizations
+    ADD CONSTRAINT fk_rails_4ecef5b8c5 FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -2606,11 +2946,35 @@ ALTER TABLE ONLY recents
 
 
 --
+-- Name: fk_rails_670188dbc7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY user_collection_preferences
+    ADD CONSTRAINT fk_rails_670188dbc7 FOREIGN KEY (collection_id) REFERENCES collections(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_732cb83ab7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY oauth_access_tokens
+    ADD CONSTRAINT fk_rails_732cb83ab7 FOREIGN KEY (application_id) REFERENCES oauth_applications(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: fk_rails_7c8fb1018a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY classification_subjects
     ADD CONSTRAINT fk_rails_7c8fb1018a FOREIGN KEY (classification_id) REFERENCES classifications(id);
+
+
+--
+-- Name: fk_rails_81596e7851; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY subject_queues
+    ADD CONSTRAINT fk_rails_81596e7851 FOREIGN KEY (subject_set_id) REFERENCES subject_sets(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -2622,11 +2986,83 @@ ALTER TABLE ONLY tutorials
 
 
 --
+-- Name: fk_rails_93073bf3b1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY set_member_subjects
+    ADD CONSTRAINT fk_rails_93073bf3b1 FOREIGN KEY (subject_id) REFERENCES subjects(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_960d10a3c6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY subject_sets
+    ADD CONSTRAINT fk_rails_960d10a3c6 FOREIGN KEY (project_id) REFERENCES projects(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_99326fb65d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY memberships
+    ADD CONSTRAINT fk_rails_99326fb65d FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_9c86377aa8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY user_seen_subjects
+    ADD CONSTRAINT fk_rails_9c86377aa8 FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_9dd81aaaa3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY memberships
+    ADD CONSTRAINT fk_rails_9dd81aaaa3 FOREIGN KEY (user_group_id) REFERENCES user_groups(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_a1b35288b8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY field_guides
+    ADD CONSTRAINT fk_rails_a1b35288b8 FOREIGN KEY (project_id) REFERENCES projects(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_b029d72783; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY workflows
+    ADD CONSTRAINT fk_rails_b029d72783 FOREIGN KEY (tutorial_subject_id) REFERENCES subjects(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
 -- Name: fk_rails_b08d342668; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subject_sets_workflows
     ADD CONSTRAINT fk_rails_b08d342668 FOREIGN KEY (subject_set_id) REFERENCES subject_sets(id);
+
+
+--
+-- Name: fk_rails_b4b53e07b8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY oauth_access_grants
+    ADD CONSTRAINT fk_rails_b4b53e07b8 FOREIGN KEY (application_id) REFERENCES oauth_applications(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_bbb4bf5489; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY set_member_subjects
+    ADD CONSTRAINT fk_rails_bbb4bf5489 FOREIGN KEY (subject_set_id) REFERENCES subject_sets(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -2646,11 +3082,75 @@ ALTER TABLE ONLY tagged_resources
 
 
 --
+-- Name: fk_rails_dff7cd1e07; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY collections_subjects
+    ADD CONSTRAINT fk_rails_dff7cd1e07 FOREIGN KEY (collection_id) REFERENCES collections(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_e881fca299; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY user_seen_subjects
+    ADD CONSTRAINT fk_rails_e881fca299 FOREIGN KEY (workflow_id) REFERENCES workflows(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_e9323f2e30; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY collections_subjects
+    ADD CONSTRAINT fk_rails_e9323f2e30 FOREIGN KEY (subject_id) REFERENCES subjects(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: fk_rails_ee63f25419; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY oauth_access_tokens
+    ADD CONSTRAINT fk_rails_ee63f25419 FOREIGN KEY (resource_owner_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_f1e22b77bf; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY subjects
+    ADD CONSTRAINT fk_rails_f1e22b77bf FOREIGN KEY (upload_user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: fk_rails_f26c409132; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY subjects
+    ADD CONSTRAINT fk_rails_f26c409132 FOREIGN KEY (project_id) REFERENCES projects(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: fk_rails_f826bcd8a1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY subject_queues
+    ADD CONSTRAINT fk_rails_f826bcd8a1 FOREIGN KEY (workflow_id) REFERENCES workflows(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: fk_rails_fc0cd14ebe; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY classification_subjects
     ADD CONSTRAINT fk_rails_fc0cd14ebe FOREIGN KEY (subject_id) REFERENCES subjects(id);
+
+
+--
+-- Name: fk_rails_fedc809cf8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT fk_rails_fedc809cf8 FOREIGN KEY (project_id) REFERENCES projects(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -2920,4 +3420,68 @@ INSERT INTO schema_migrations (version) VALUES ('20160329144922');
 INSERT INTO schema_migrations (version) VALUES ('20160330142609');
 
 INSERT INTO schema_migrations (version) VALUES ('20160406151657');
+
+INSERT INTO schema_migrations (version) VALUES ('20160408104326');
+
+INSERT INTO schema_migrations (version) VALUES ('20160412125332');
+
+INSERT INTO schema_migrations (version) VALUES ('20160414151041');
+
+INSERT INTO schema_migrations (version) VALUES ('20160425190129');
+
+INSERT INTO schema_migrations (version) VALUES ('20160427150421');
+
+INSERT INTO schema_migrations (version) VALUES ('20160506182308');
+
+INSERT INTO schema_migrations (version) VALUES ('20160512181921');
+
+INSERT INTO schema_migrations (version) VALUES ('20160525103520');
+
+INSERT INTO schema_migrations (version) VALUES ('20160527140046');
+
+INSERT INTO schema_migrations (version) VALUES ('20160527162831');
+
+INSERT INTO schema_migrations (version) VALUES ('20160601162035');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074506');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074514');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074521');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074534');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074550');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074559');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074613');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074625');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074633');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074640');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074658');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074711');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074718');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074730');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074745');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074746');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074754');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074924');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613074934');
+
+INSERT INTO schema_migrations (version) VALUES ('20160613075003');
+
+INSERT INTO schema_migrations (version) VALUES ('20170816151145');
 
