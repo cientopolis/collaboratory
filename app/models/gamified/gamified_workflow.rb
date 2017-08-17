@@ -1,15 +1,10 @@
 require 'json'
 class GamifiedWorkflow < Workflow
 
-  #after_create only: :create ,:update => calculatePoints
-  #after_create :calculatePoints
-  #after_update :calculatePoints
-  after_find :calculatePoints#, if: -> {@pointValue = nil}
+  self.table_name = "gamified_workflows"
+  belongs_to :parent, :class_name => "Workflow"
 
-  #@pointValue
-
-  #attr_accessor :pointValue
-
+  after_find :calculatePoints
 
   def isDrawingTaskAndHasFollowUp(taskData)
     taskData["type"] == "drawing" and (taskData["tools"][0]["details"].size > 0)
@@ -20,7 +15,6 @@ class GamifiedWorkflow < Workflow
 
 
     task = self.tasks.to_hash
-    #puts workflow.class
     totalPoints = 0
 
     task.each do |taskName,taskData|
@@ -28,10 +22,7 @@ class GamifiedWorkflow < Workflow
       totalPoints += pointValues['extra'] if isDrawingTaskAndHasFollowUp(taskData)
     end
 
-    #workflow['pointValue'] = totalPoints
-    self.pointValue = totalPoints
-
-    #puts workflow.to_json
+    #@pointValue = totalPoints
   end
 
 end
