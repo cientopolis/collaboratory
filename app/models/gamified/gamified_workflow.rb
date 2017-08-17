@@ -1,6 +1,10 @@
 require 'json'
 class GamifiedWorkflow < Workflow
 
+  #after_create only: :create ,:update => calculatePoints
+  after_create :calculatePoints
+  after_update :calculatePoints
+
   @pointValue
 
   def tasks
