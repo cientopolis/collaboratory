@@ -83,6 +83,7 @@ class Api::V1::ProjectsController < Api::ApiController
   end
 
   def create
+    #byebug
     super { |project| TalkAdminCreateWorker.perform_async(project.id) }
   end
 

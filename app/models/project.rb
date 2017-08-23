@@ -16,6 +16,7 @@ class Project < ActiveRecord::Base
   has_many :tutorials
   has_many :field_guides
   has_many :workflows
+  has_many :gamified_workflows
   has_many :subject_sets, dependent: :destroy
   has_many :classifications
   has_many :subjects
@@ -69,6 +70,8 @@ class Project < ActiveRecord::Base
   can_be_linked :workflow, :scope_for, :update, :user
   can_be_linked :access_control_list, :scope_for, :update, :user
   can_be_linked :user_group, :scope_for, :edit_project, :user
+
+  #can_be_linked :gamified_workflow, :scope_for, :update, :user
 
   preferences_model :user_project_preference
 

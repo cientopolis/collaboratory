@@ -34,6 +34,7 @@ module JsonApiController
     end
 
     def schema_type(type)
+      #byebug
       case type
       when :json_schema
         include JsonApiController::JsonSchemaValidator

@@ -6,14 +6,17 @@ module JsonApiController
     extend ActiveSupport::Concern
 
     included do
+      #byebug
       @action_params = Hash.new
       (@actions & %i(update create)).each do |action|
+        byebug
         @action_params[action] = schema_class(action).try(:new)
       end
     end
 
     module ClassMethods
       def action_params
+        #byebug
         @action_params
       end
 
@@ -29,6 +32,7 @@ module JsonApiController
     protected
 
     def params_for(action=action_name.to_sym)
+      byebug
       ps = params.require(resource_sym).permit!
       if validator = self.class.action_params[action]
         validator.validate!(ps)

@@ -408,12 +408,41 @@ ALTER SEQUENCE flipper_gates_id_seq OWNED BY flipper_gates.id;
 
 
 --
+-- Name: gamified_projects; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE gamified_projects (
+    id integer NOT NULL
+);
+
+
+--
+-- Name: gamified_projects_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE gamified_projects_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: gamified_projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE gamified_projects_id_seq OWNED BY gamified_projects.id;
+
+
+--
 -- Name: gamified_workflows; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE gamified_workflows (
     id integer NOT NULL,
-    "pointValue" integer
+    "pointValue" integer,
+    project_id integer
 );
 
 
@@ -1527,6 +1556,13 @@ ALTER TABLE ONLY flipper_gates ALTER COLUMN id SET DEFAULT nextval('flipper_gate
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY gamified_projects ALTER COLUMN id SET DEFAULT nextval('gamified_projects_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY gamified_workflows ALTER COLUMN id SET DEFAULT nextval('gamified_workflows_id_seq'::regclass);
 
 
@@ -1797,6 +1833,14 @@ ALTER TABLE ONLY flipper_features
 
 ALTER TABLE ONLY flipper_gates
     ADD CONSTRAINT flipper_gates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gamified_projects_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY gamified_projects
+    ADD CONSTRAINT gamified_projects_pkey PRIMARY KEY (id);
 
 
 --
@@ -3484,4 +3528,8 @@ INSERT INTO schema_migrations (version) VALUES ('20160613074934');
 INSERT INTO schema_migrations (version) VALUES ('20160613075003');
 
 INSERT INTO schema_migrations (version) VALUES ('20170816151145');
+
+INSERT INTO schema_migrations (version) VALUES ('20170822144704');
+
+INSERT INTO schema_migrations (version) VALUES ('20170822164926');
 

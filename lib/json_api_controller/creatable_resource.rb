@@ -3,6 +3,7 @@ module JsonApiController
     include RelationManager
 
     def create
+      #byebug
       resources = resource_class.transaction(requires_new: true) do
         begin
           Array.wrap(create_params).map do |ps|
