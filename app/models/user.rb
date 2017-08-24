@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
   after_create :send_welcome_email#, unless: :migrated
   before_create :set_ouroboros_api_key
 
+
   delegate :projects, to: :identity_group
   delegate :collections, to: :identity_group
   delegate :subjects, to: :identity_group
@@ -305,4 +306,6 @@ class User < ActiveRecord::Base
   def uploaded_subjects_count
     Subject.unscoped.where(upload_user_id: self.id).count
   end
+  
+  alias_method :gamified_projects, :projects
 end

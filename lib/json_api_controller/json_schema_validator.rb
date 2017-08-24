@@ -9,8 +9,9 @@ module JsonApiController
       #byebug
       @action_params = Hash.new
       (@actions & %i(update create)).each do |action|
-        byebug
+        #byebug
         @action_params[action] = schema_class(action).try(:new)
+        #byebug
       end
     end
 
@@ -32,7 +33,7 @@ module JsonApiController
     protected
 
     def params_for(action=action_name.to_sym)
-      byebug
+      #byebug
       ps = params.require(resource_sym).permit!
       if validator = self.class.action_params[action]
         validator.validate!(ps)
