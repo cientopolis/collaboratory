@@ -51,6 +51,9 @@ class Workflow < ActiveRecord::Base
 
   ranks :display_order, with_same: :project_id
 
+  after_find :calculatePoints
+  attr_accessor :pointValue
+
   def self.same_project?(subject_set)
     where(project: subject_set.project)
   end
@@ -101,5 +104,30 @@ class Workflow < ActiveRecord::Base
     else
       cellect_size_subject_space?
     end
+  end
+
+  private
+
+  def isDrawingTaskAndHasFollowUp(taskData)
+    taskData["type"] == "drawing" and (taskData["tools"][0]["details"].size > 0)
+  end
+
+  def calculatePoints
+    pointValues = {'single' => 10, 'drawing' => 15, 'extra' => 5}
+
+
+    task = tasks.to_hash
+    #puts workflow.class
+    totalPoints = 0
+
+    task.each do |taskName,taskData|
+      totalPoints += pointValues[taskData["type"]]
+      totalPoints += pointValues['extra'] if isDrawingTaskAndHasFollowUp(taskData)
+    end
+
+    #workflow['pointValue'] = totalPoints
+    @pointValue = totalPoints
+
+    #puts workflow.to_json
   end
 end
