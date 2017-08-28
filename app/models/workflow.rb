@@ -52,7 +52,7 @@ class Workflow < ActiveRecord::Base
   ranks :display_order, with_same: :project_id
 
   after_find :calculatePoints
-  attr_accessor :pointValue
+  #attr_accessor :pointValue
 
   def self.same_project?(subject_set)
     where(project: subject_set.project)
@@ -126,7 +126,9 @@ class Workflow < ActiveRecord::Base
     end
 
     #workflow['pointValue'] = totalPoints
-    @pointValue = totalPoints
+    #pointValue = totalPoints
+    write_attribute(:pointValue, totalPoints)
+    #Workflow.arel_table[:pointValue] = totalPoints
 
     #puts workflow.to_json
   end
